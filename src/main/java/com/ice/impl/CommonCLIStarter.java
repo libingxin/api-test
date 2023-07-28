@@ -64,34 +64,34 @@ public class CommonCLIStarter extends Starter {
                         .build());
     }
 
-private CommandLine stage2(Options options) {
-    CommandLineParser parser = new DefaultParser();
+    private CommandLine stage2(Options options) {
+        CommandLineParser parser = new DefaultParser();
 
-    try {
-        return parser.parse(options, args);
-    } catch (Exception e) {
-        throw new IllegalArgumentException("Parsed parameters error", e);
-    }
-}
-
-private Parameter stage3(CommandLine commandLine) {
-    PlanParameter parameter = new PlanParameter();
-    parameter.setThread(Integer.parseInt(commandLine.getOptionValue(THREAD_NAME)));
-    parameter.setCount(Integer.parseInt(commandLine.getOptionValue(COUNT_NAME)));
-    parameter.setSecond(Integer.parseInt(commandLine.getOptionValue(SECOND_NAME)));
-    parameter.setOutput(commandLine.getOptionValue(OUTPUT_NAME));
-
-    if (commandLine.hasOption(PROPERTY_NAME)) {
-        Properties properties = commandLine.getOptionProperties(PROPERTY_NAME);
-        if (properties != null && properties.size() > 0) {
-            Map<String, String> property = new HashMap<>();
-            parameter.setProperty(property);
-            for (Map.Entry<Object, Object> entity : properties.entrySet()) {
-                property.put(String.valueOf(entity.getKey()), String.valueOf(entity.getValue()));
-            }
+        try {
+            return parser.parse(options, args);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Parsed parameters error", e);
         }
     }
 
-    return parameter;
-}
+    private Parameter stage3(CommandLine commandLine) {
+        PlanParameter parameter = new PlanParameter();
+        parameter.setThread(Integer.parseInt(commandLine.getOptionValue(THREAD_NAME)));
+        parameter.setCount(Integer.parseInt(commandLine.getOptionValue(COUNT_NAME)));
+        parameter.setSecond(Integer.parseInt(commandLine.getOptionValue(SECOND_NAME)));
+        parameter.setOutput(commandLine.getOptionValue(OUTPUT_NAME));
+
+        if (commandLine.hasOption(PROPERTY_NAME)) {
+            Properties properties = commandLine.getOptionProperties(PROPERTY_NAME);
+            if (properties != null && properties.size() > 0) {
+                Map<String, String> property = new HashMap<>();
+                parameter.setProperty(property);
+                for (Map.Entry<Object, Object> entity : properties.entrySet()) {
+                    property.put(String.valueOf(entity.getKey()), String.valueOf(entity.getValue()));
+                }
+            }
+        }
+
+        return parameter;
+    }
 }
